@@ -2,28 +2,65 @@
 //in this component we will have grid of different catogories of items
 
 import React from "react";
-import { View, Text, StyleSheet, Button } from "react-native";
+import { View, Text, StyleSheet, FlatList } from "react-native";
+import { CATEGORIES, MEALS } from "../data/dummy-data";
+import MealItem from "../components/MealItem";
 
+// import Colors from "../constants/Colors";
 const CatagorieMealsScreen = (props) => {
-  return (
-    <View style={styles.screen}>
-      <Text>This is Catagorie Meals Screen</Text>
-      <Button
-        title="Go to Details"
-        onPress={() => {
-          props.navigation.navigate({ routeName: "MealDetail" });
+  const categoryId = props.navigation.getParam("categoryId");
+
+  const selected_Catagory_Meals = MEALS.filter(
+    (meal) => meal.categoryIds.indexOf(categoryId) >= 0
+  );
+
+  const selectedCategory = CATEGORIES.find((catItems) => {
+    return catItems.id === categoryId;
+  });
+
+  const renderMealItems = (itemData) => {
+    return (
+      <MealItem
+        mealInfo={itemData}
+        onSelectMeal={() => {
+          props.navigation.navigate({
+            routeName: "MealDetail",
+            params: {
+              mealId: itemData.item.id,
+            },
+          });
         }}
       />
-      <Button
-        title="BACK"
-        onPress={() => {
-          props.navigation.goBack();
-        }}
+    );
+  };
+  return (
+    <View style={styles.screen}>
+      <FlatList
+        data={selected_Catagory_Meals}
+        renderItem={renderMealItems}
+        style={{ width: "100%" }}
       />
     </View>
   );
 };
 
+CatagorieMealsScreen.navigationOptions = (navigationData) => {
+  // console.log("-----------------------------------------");
+  // console.log(navigationData);
+  const categoryId = navigationData.navigation.getParam("categoryId");
+  const selectedCategory = CATEGORIES.find(
+    (categoryItem) => categoryItem.id === categoryId
+  );
+  return {
+    headerTitle: selectedCategory.title,
+    //   headerStyle: {
+    //     backgroundColor:
+    //       Platform.OS === "android" ? Colors.primaryColor : Colors.day,
+    //   },
+    //   headerTintColor:
+    //     Platform.OS === "android" ? Colors.day : Colors.primaryColor,
+  };
+};
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
