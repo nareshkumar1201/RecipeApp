@@ -7,6 +7,7 @@ import {
   ImageBackground,
 } from "react-native";
 import Colors from "../constants/Colors";
+import DefaultText from "./DefaultText";
 const MealItem = (props) => {
   const { title, duration, complexity, affordability, imgUrl, onSelectMeal } =
     props.mealInfo.item;
@@ -25,9 +26,9 @@ const MealItem = (props) => {
             </ImageBackground>
           </View>
           <View style={{ ...styles.mealRow, ...styles.mealDetail }}>
-            <Text>{duration} min</Text>
-            <Text>{complexity.toUpperCase()}</Text>
-            <Text>{affordability.toUpperCase()}</Text>
+            <DefaultText>{duration} min</DefaultText>
+            <DefaultText>{complexity.toUpperCase()}</DefaultText>
+            <DefaultText>{affordability.toUpperCase()}</DefaultText>
           </View>
         </View>
       </TouchableOpacity>
@@ -37,7 +38,7 @@ const MealItem = (props) => {
 
 const styles = StyleSheet.create({
   mealItem: {
-    height: 300,
+    height: 350,
     width: "100%",
     backgroundColor: Colors.day,
     borderRadius: 10,
@@ -60,7 +61,7 @@ const styles = StyleSheet.create({
     height: "75%",
   },
   mealDetail: {
-    height: "10%",
+    height: "5%",
     paddingHorizontal: 5,
     alignItems: "center",
     justifyContent: "space-between",

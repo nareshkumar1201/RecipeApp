@@ -6,9 +6,11 @@ import { View, Text, StyleSheet, FlatList } from "react-native";
 gets a special props passed in automatically  , the props includes
 navitation object which has a navigate mehtod, which takes an 
 object were we can specify the name of the route that we need to navigate*/
-
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import CustomeHeaderButton from "../components/CustomeHeaderButton";
 import { CATEGORIES } from "../data/dummy-data";
 import CategoryGridTile from "../components/CategoryGridTile";
+import { DrawerActions } from "react-navigation-drawer";
 const CatagoriesScreen = (props) => {
   // console.log(props);
   const renderGridItem = (itemData) => {
@@ -37,8 +39,24 @@ const CatagoriesScreen = (props) => {
   );
 };
 
-CatagoriesScreen.navigationOptions = {
-  headerTitle: "Meals Categories",
+CatagoriesScreen.navigationOptions = (navigationData) => {
+  // console.log(`111111111111111111111`, navigationData);
+  return {
+    headerTitle: "Meals Categories",
+    headerLeft: () => {
+      return (
+        <HeaderButtons HeaderButtonComponent={CustomeHeaderButton}>
+          <Item
+            title="Menu"
+            iconName="ios-menu"
+            onPress={() => {
+              navigationData.navigation.dispatch(DrawerActions.toggleDrawer());
+            }}
+          />
+        </HeaderButtons>
+      );
+    },
+  };
 };
 const styles = StyleSheet.create({
   screen: {

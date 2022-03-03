@@ -2,15 +2,23 @@
 //in this component we will have grid of different catogories of items
 
 import React from "react";
-import { View, Text, StyleSheet, FlatList } from "react-native";
 import { CATEGORIES, MEALS } from "../data/dummy-data";
 import MealItem from "../components/MealItem";
-
+import MealsList from "../components/MealsList";
+import { connect } from "react-redux";
 // import Colors from "../constants/Colors";
 const CatagorieMealsScreen = (props) => {
   const categoryId = props.navigation.getParam("categoryId");
 
-  const selected_Catagory_Meals = MEALS.filter(
+  console.log("999999999999999999999", props.filteredMeals);
+
+  // const availableMeals = useSelector((state) => {
+  //   // state.meals_reducer_state.filteredMeals;
+  //   props.filteredMeals;
+  // });
+
+  // console.log("6666666666666666666666666", availableMeals);
+  const selected_Catagory_Meals = props.filteredMeals.filter(
     (meal) => meal.categoryIds.indexOf(categoryId) >= 0
   );
 
@@ -18,30 +26,7 @@ const CatagorieMealsScreen = (props) => {
     return catItems.id === categoryId;
   });
 
-  const renderMealItems = (itemData) => {
-    return (
-      <MealItem
-        mealInfo={itemData}
-        onSelectMeal={() => {
-          props.navigation.navigate({
-            routeName: "MealDetail",
-            params: {
-              mealId: itemData.item.id,
-            },
-          });
-        }}
-      />
-    );
-  };
-  return (
-    <View style={styles.screen}>
-      <FlatList
-        data={selected_Catagory_Meals}
-        renderItem={renderMealItems}
-        style={{ width: "100%" }}
-      />
-    </View>
-  );
+  return <MealsList selected_Meals={selected_Catagory_Meals} {...props} />;
 };
 
 CatagorieMealsScreen.navigationOptions = (navigationData) => {
@@ -61,12 +46,10 @@ CatagorieMealsScreen.navigationOptions = (navigationData) => {
     //     Platform.OS === "android" ? Colors.day : Colors.primaryColor,
   };
 };
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-});
-
-export default CatagorieMealsScreen;
+const mapStateToProps = (state) => {
+  console.log("iiiiiiiiiiiiiiii", state);
+  return {
+    filteredMeals: state.meals_reducer_state.filteredMeals,
+  };
+};
+export default connect(mapStateToProps, {})(CatagorieMealsScreen);
