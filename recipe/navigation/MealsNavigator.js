@@ -61,7 +61,17 @@ const MealsNavigator = createStackNavigator(
 
 const favNavigator = createStackNavigator(
   {
-    Favorites: FavoritesScreen,
+    Favorites: {
+      screen: FavoritesScreen,
+      // navigationOptions: {
+      //   headerStyle: {
+      //     backgroundColor:
+      //       Platform.OS === "android" ? Colors.accentColor : Colors.day,
+      //   },
+      //   headerTintColor:
+      //     Platform.OS === "android" ? Colors.day : Colors.primaryColor,
+      // },
+    },
     MealDetail: MealsDetailsScreen,
   },
   {

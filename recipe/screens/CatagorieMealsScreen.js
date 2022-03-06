@@ -10,7 +10,7 @@ import { connect } from "react-redux";
 const CatagorieMealsScreen = (props) => {
   const categoryId = props.navigation.getParam("categoryId");
 
-  console.log("999999999999999999999", props.filteredMeals);
+  // console.log("999999999999999999999", props.filteredMeals);
 
   // const availableMeals = useSelector((state) => {
   //   // state.meals_reducer_state.filteredMeals;
@@ -47,7 +47,7 @@ CatagorieMealsScreen.navigationOptions = (navigationData) => {
   };
 };
 const mapStateToProps = (state) => {
-  console.log("iiiiiiiiiiiiiiii", state);
+  // console.log("iiiiiiiiiiiiiiii", state);
   return {
     filteredMeals: state.meals_reducer_state.filteredMeals,
   };
